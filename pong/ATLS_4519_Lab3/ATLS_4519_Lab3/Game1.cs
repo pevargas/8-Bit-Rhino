@@ -34,7 +34,7 @@ namespace ATLS_4519_Lab3
         SpriteBatch spriteBatch;
 
         // Create a SoundEffect resource
-        SoundEffect soundEffect1, soundEffect2;
+        SoundEffect soundEffect1, start;
 
         // Audio Objects
         AudioEngine audioEngine;
@@ -79,6 +79,8 @@ namespace ATLS_4519_Lab3
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            start = Content.Load<SoundEffect>("herewego");
+            start.Play();
 
             base.Initialize();
         }
