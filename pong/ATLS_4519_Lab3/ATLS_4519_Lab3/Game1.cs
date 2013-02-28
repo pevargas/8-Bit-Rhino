@@ -197,8 +197,8 @@ namespace ATLS_4519_Lab3
             // opponent.position += new Vector2(LeftThumb.X, -LeftThumb.Y) * 5;
             
             //  Change the sprite 2 position using the keyboard
-            if (keyboardState.IsKeyDown(Keys.Up)) { player.position += new Vector2(0, -5); }
-            if (keyboardState.IsKeyDown(Keys.Down)) { player.position += new Vector2(0, 5); }
+            if (keyboardState.IsKeyDown(Keys.Up) && player.position.Y > 0) { player.position += new Vector2(0, -5); }
+            if (keyboardState.IsKeyDown(Keys.Down) && player.position.Y < (winY-player.size.Y)) { player.position += new Vector2(0, 5); }
 
             // Opponent Algorithm
             if (ball.position.X < threshold) {
