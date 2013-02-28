@@ -102,7 +102,6 @@ namespace ATLS_4519_Lab3
 
             // Load the SoundEffect resource
             soundEffect1 = Content.Load<SoundEffect>("VOLTAGE");
-            soundEffect2 = Content.Load<SoundEffect>("VOLTAGE");
 
             // Load files built from XACT project
             audioEngine = new AudioEngine("Content\\Lab3Sounds.xgs");
@@ -161,10 +160,6 @@ namespace ATLS_4519_Lab3
             // Get User input
             KeyboardState keyboardState = Keyboard.GetState();
 
-            // Grab midpoint
-            Vector2 midpoint = ball.Midpoint(opponent);
-            float pitch = (midpoint.Y / winY) * 2 - 1;
-            float pan   = (midpoint.X / winX) * 2 - 1;
             // Add chance to the mix
             Random rnd = new Random();
             // Move ball and get information
@@ -209,6 +204,7 @@ namespace ATLS_4519_Lab3
                 if (opponent.position.Y < ball.position.Y) { opponent.position += new Vector2(0, 5); }
             }
 
+            // Collision Detection and Handeling
             if ((kill[(int)Who.Player] = ball.Collides(player)) > 0 ||
                 (kill[(int)Who.Opponent] = ball.Collides(opponent)) > 0) {
                     if (kill[(int)Who.Player] == 2 || kill[(int)Who.Opponent] == 2) //Kill Shot!
@@ -217,13 +213,6 @@ namespace ATLS_4519_Lab3
                         ball.velocity = new Vector2(-ball.velocity.X + (rnd.Next(-2, 2)), ball.velocity.Y + (rnd.Next(-2, 2)));
                 GamePad.SetVibration(PlayerIndex.One, 1.0f, 1.0f);
                 soundEffect1.Play(1f, 1f, 0f);
-
-                //soundEffect2.Play(1.0f, pitch, pan);
-                //soundEffect1.Play();
-    
-                // Get an instance of the cue from the XACT project
-                //cue = soundBank.GetCue("Explosion");
-                //cue.Play();
             }
             else
                 GamePad.SetVibration(PlayerIndex.One, 0f, 0f);
