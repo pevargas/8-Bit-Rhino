@@ -2,14 +2,17 @@ Content\ball.xnb
 Content\left_paddle.xnb
 Content\right_paddle.xnb
 Content\small_ball.xnb
-Content\volt-ball-final.xnb
-Content\vt_left_paddle.xnb
-Content\vt_right_paddle.xnb
 Content\chord.xnb
 Content\notify.xnb
 Content\Courier New.xnb
+<<<<<<< HEAD
 Content\EricJordan_2012_30sec.xnb
 Content\VOLTAGE.xnb
+=======
+Content\volt-ball-final.xnb
+Content\vt_left_paddle.xnb
+Content\vt_right_paddle.xnb
+>>>>>>> e5cb9a3d1bbdc730cc316137526acfb314d7dce0
 Content\Lab3Sounds.xgs
 Content\Wave Bank.xwb
 Content\Music.xwb

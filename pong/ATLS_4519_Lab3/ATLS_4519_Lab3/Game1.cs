@@ -1,10 +1,11 @@
 /*  File:       Game1.cs                    Feb 2013
  *  Author:     JKB                         University of Colorado Boulder
- *  Student:    Patrick Vargas              patrick.vargas@colorado.edu
+ *  Students:   8-Bit Rhino                 (Andrew Davis, Spencer Fink, Andrew Oetjen, Patrick Vargas)
  *  Description:
  *      The main program.
- *  Need to follow this to get XACT to work: http://stackoverflow.com/questions/10307898/xna-4-0-cannot-create-an-audioengine
+ *  Needed to follow this to get XACT to work: http://stackoverflow.com/questions/10307898/xna-4-0-cannot-create-an-audioengine
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,9 +63,9 @@ namespace ATLS_4519_Lab3
         {
             graphics = new GraphicsDeviceManager(this);
             // changing the back buffer size changes the window size (in windowed mode)
-            graphics.PreferredBackBufferWidth = 1400;
-            graphics.PreferredBackBufferHeight = 700;
-            threshold = graphics.PreferredBackBufferHeight / 2;
+            graphics.PreferredBackBufferWidth = 1200;
+            graphics.PreferredBackBufferHeight = 600;
+            threshold = graphics.PreferredBackBufferWidth / 2;
 
             Content.RootDirectory = "Content";
         }
