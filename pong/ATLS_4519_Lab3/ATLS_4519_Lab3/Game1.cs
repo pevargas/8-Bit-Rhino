@@ -16,6 +16,8 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System.Diagnostics;
+using System.Threading;
 
 namespace ATLS_4519_Lab3
 {
@@ -187,36 +189,35 @@ namespace ATLS_4519_Lab3
             // Check if isDoneed
             if (ball.score[(int)Who.Player] >= finalScore) {
                 victory = "That's pretty neat! You won!";
-                win.Play(1f, 1f, 0f);
                 isDone = true;
             }
             else if (ball.score[(int)Who.Opponent] >= finalScore) {
                 victory = "G Dangit! You lost!";
-                lose.Play(1f, 1f, 0f);
                 isDone = true;
             }
 
-            if (!isDone) {
-                // Move the sprite
-                if (wall > 0) { // Check if hit wall
-                    switch (wall) {
-                        case 2: // Player Miss
-                            threshold -= 10;
-                            ball.position = new Vector2(winX / 2, winY / 2);
-                            ball.velocity = new Vector2(-rnd.Next(3, 6), rnd.Next(-5, 6));
-                            miss.Play(1f, 1f, 0f);
-                            break;
-                        case 3: // Opponent Miss
-                            threshold += 10;
-                            ball.position = new Vector2(winX / 2, winY / 2);
-                            ball.velocity = new Vector2(rnd.Next(3, 6), rnd.Next(-5, 6));
-                            miss.Play(1f, 1f, 0f);
-                            break;
-                        default:
-                            walls.Play(.50f, .75f, 0f);
-                            break;
-                    }
+            // Move the sprite
+            if (wall > 0) { // Check if hit wall
+                switch (wall) {
+                    case 2: // Player Miss
+                        threshold -= 10;
+                        ball.position = new Vector2(winX / 2, winY / 2);
+                        ball.velocity = new Vector2(-rnd.Next(3, 6), rnd.Next(-5, 6));
+                        miss.Play(1f, 1f, 0f);
+                        break;
+                    case 3: // Opponent Miss
+                        threshold += 10;
+                        ball.position = new Vector2(winX / 2, winY / 2);
+                        ball.velocity = new Vector2(rnd.Next(3, 6), rnd.Next(-5, 6));
+                        miss.Play(1f, 1f, 0f);
+                        break;
+                    default:
+                        walls.Play(.50f, .75f, 0f);
+                        break;
                 }
+            }
+
+            if (!isDone) {
 
                 // Change the sprite 2 position using the left thumbstick of the Xbox 360 controller
                 // Vector2 LeftThumb = GamePad.GetState(PlayerIndex.One).ThumbSticks.Left;
@@ -246,10 +247,9 @@ namespace ATLS_4519_Lab3
                     }
                 else
                     GamePad.SetVibration(PlayerIndex.One, 0f, 0f);
+                // Update the audio engine
+                audioEngine.Update();
             }
-
-            // Update the audio engine
-            audioEngine.Update();
 
             base.Update(gameTime);
         }
@@ -280,10 +280,13 @@ namespace ATLS_4519_Lab3
             else {
                 FontPos = new Vector2((winX / 2) - 400, (winY / 2) - 50);
                 spriteBatch.DrawString(Font1, victory, FontPos, Color.Green);
+                ball.score[0] = ball.score[1] = 0;
             }
+
             spriteBatch.End();
 
             base.Draw(gameTime);
+
         }
     }
 }
