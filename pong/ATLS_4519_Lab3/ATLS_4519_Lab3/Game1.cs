@@ -100,8 +100,8 @@ namespace ATLS_4519_Lab3
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // Load the SoundEffect resource
-            soundEffect1 = Content.Load<SoundEffect>("chord");
-            soundEffect2 = Content.Load<SoundEffect>("notify");
+            soundEffect1 = Content.Load<SoundEffect>("VOLTAGE");
+            soundEffect2 = Content.Load<SoundEffect>("VOLTAGE");
 
             // Load files built from XACT project
             audioEngine = new AudioEngine("Content\\Lab3Sounds.xgs");
@@ -113,7 +113,7 @@ namespace ATLS_4519_Lab3
             // The audio engine must be updated before the streaming cue is ready
             audioEngine.Update();
             // Get cue for streaming music
-            musicCue = soundBank.GetCue("Music");
+            musicCue = soundBank.GetCue("EricJordan_2012_30sec");
             // Start the background music
             musicCue.Play();
 
