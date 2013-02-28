@@ -34,13 +34,12 @@ namespace ATLS_4519_Lab3
         SpriteBatch spriteBatch;
 
         // Create a SoundEffect resource
-        SoundEffect soundEffect1, start;
+        SoundEffect walls, start, miss, win, lose, killshot;
 
         // Audio Objects
         AudioEngine audioEngine;
         SoundBank soundBank;
         WaveBank waveBank;
-        Cue cue;
 
         WaveBank streamingWaveBank;
         Cue musicCue;
@@ -48,6 +47,8 @@ namespace ATLS_4519_Lab3
         // Font Objects
         SpriteFont Font1;
         Vector2 FontPos;
+        bool isDone;
+        int finalScore;
         public string victory; // used to hold the congratulations/blnt message
 
         // Set window deimensions for ease.
@@ -78,7 +79,15 @@ namespace ATLS_4519_Lab3
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            // Set window size
+            winX = graphics.PreferredBackBufferWidth;
+            winY = graphics.PreferredBackBufferHeight;
+
+            // Initialize isDone boolean
+            isDone = false;
+            finalScore = 7;
+
+            // Start first sound bite
             start = Content.Load<SoundEffect>("herewego");
             start.Play();
 
@@ -92,8 +101,6 @@ namespace ATLS_4519_Lab3
         protected override void LoadContent()
         {
             // Set Some Variables
-            winX = graphics.PreferredBackBufferWidth;
-            winY = graphics.PreferredBackBufferHeight;
             float padX  = 24; // Paddle Width
             float padY  = 64; // Paddle Height
             float ballD = 32; // Ball Diameter
@@ -103,7 +110,11 @@ namespace ATLS_4519_Lab3
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // Load the SoundEffect resource
-            soundEffect1 = Content.Load<SoundEffect>("VOLTAGE");
+            walls = Content.Load<SoundEffect>("VOLTAGE");
+            miss  = Content.Load<SoundEffect>("neat");
+            win   = Content.Load<SoundEffect>("score");
+            lose  = Content.Load<SoundEffect>("miss");
+            killshot = Content.Load<SoundEffect>("killshot");
 
             // Load files built from XACT project
             audioEngine = new AudioEngine("Content\\Lab3Sounds.xgs");
@@ -173,51 +184,69 @@ namespace ATLS_4519_Lab3
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            // Move the sprite
-            if (wall > 0) { // Check if hit wall
-                switch (wall) {
-                    case 2: // Player Miss
-                        threshold -= 10;
-                        ball.position = new Vector2(winX / 2, winY / 2);
-                        ball.velocity = new Vector2(-rnd.Next(3, 6), rnd.Next(-5, 6));
-                        break;
-                    case 3: // Opponent Miss
-                        threshold += 10;
-                        ball.position = new Vector2(winX / 2, winY / 2);
-                        ball.velocity = new Vector2(rnd.Next(3, 6), rnd.Next(-5, 6));
-                        break;
-                    default:
-                        soundEffect1.Play(.50f, .75f, 0f);
-                        break;
+            // Check if isDoneed
+            if (ball.score[(int)Who.Player] >= finalScore) {
+                victory = "That's pretty neat! You won!";
+                win.Play(1f, 1f, 0f);
+                isDone = true;
+            }
+            else if (ball.score[(int)Who.Opponent] >= finalScore) {
+                victory = "G Dangit! You lost!";
+                lose.Play(1f, 1f, 0f);
+                isDone = true;
+            }
+
+            if (!isDone) {
+                // Move the sprite
+                if (wall > 0) { // Check if hit wall
+                    switch (wall) {
+                        case 2: // Player Miss
+                            threshold -= 10;
+                            ball.position = new Vector2(winX / 2, winY / 2);
+                            ball.velocity = new Vector2(-rnd.Next(3, 6), rnd.Next(-5, 6));
+                            miss.Play(1f, 1f, 0f);
+                            break;
+                        case 3: // Opponent Miss
+                            threshold += 10;
+                            ball.position = new Vector2(winX / 2, winY / 2);
+                            ball.velocity = new Vector2(rnd.Next(3, 6), rnd.Next(-5, 6));
+                            miss.Play(1f, 1f, 0f);
+                            break;
+                        default:
+                            walls.Play(.50f, .75f, 0f);
+                            break;
+                    }
                 }
-            }
 
-            // Change the sprite 2 position using the left thumbstick of the Xbox 360 controller
-            // Vector2 LeftThumb = GamePad.GetState(PlayerIndex.One).ThumbSticks.Left;
-            // opponent.position += new Vector2(LeftThumb.X, -LeftThumb.Y) * 5;
-            
-            //  Change the sprite 2 position using the keyboard
-            if (keyboardState.IsKeyDown(Keys.Up) && player.position.Y > 0) { player.position += new Vector2(0, -5); }
-            if (keyboardState.IsKeyDown(Keys.Down) && player.position.Y < (winY-player.size.Y)) { player.position += new Vector2(0, 5); }
+                // Change the sprite 2 position using the left thumbstick of the Xbox 360 controller
+                // Vector2 LeftThumb = GamePad.GetState(PlayerIndex.One).ThumbSticks.Left;
+                // opponent.position += new Vector2(LeftThumb.X, -LeftThumb.Y) * 5;
+                
+                //  Change the sprite 2 position using the keyboard
+                if (keyboardState.IsKeyDown(Keys.Up) && player.position.Y > 0) { player.position += new Vector2(0, -5); }
+                if (keyboardState.IsKeyDown(Keys.Down) && player.position.Y < (winY-player.size.Y)) { player.position += new Vector2(0, 5); }
 
-            // Opponent Algorithm
-            if (ball.position.X < threshold) {
-                if (opponent.position.Y > ball.position.Y) { opponent.position += new Vector2(0, -5); }
-                if (opponent.position.Y < ball.position.Y) { opponent.position += new Vector2(0, 5); }
-            }
+                // Opponent Algorithm
+                if (ball.position.X < threshold) {
+                    if (opponent.position.Y > ball.position.Y) { opponent.position += new Vector2(0, -5); }
+                    if (opponent.position.Y < ball.position.Y) { opponent.position += new Vector2(0, 5); }
+                }
 
-            // Collision Detection and Handeling
-            if ((kill[(int)Who.Player] = ball.Collides(player)) > 0 ||
-                (kill[(int)Who.Opponent] = ball.Collides(opponent)) > 0) {
-                    if (kill[(int)Who.Player] == 2 || kill[(int)Who.Opponent] == 2) //Kill Shot!
-                        ball.velocity = new Vector2(-ball.velocity.X + (rnd.Next(-10, 10)), ball.velocity.Y + (rnd.Next(-10, 10)));
-                    else
-                        ball.velocity = new Vector2(-ball.velocity.X + (rnd.Next(-2, 2)), ball.velocity.Y + (rnd.Next(-2, 2)));
-                GamePad.SetVibration(PlayerIndex.One, 1.0f, 1.0f);
-                soundEffect1.Play(1f, 1f, 0f);
+                // Collision Detection and Handeling
+                if ((kill[(int)Who.Player] = ball.Collides(player)) > 0 ||
+                    (kill[(int)Who.Opponent] = ball.Collides(opponent)) > 0) {
+                        if (kill[(int)Who.Player] == 2 || kill[(int)Who.Opponent] == 2) { //Kill Shot!
+                            ball.velocity = new Vector2(-ball.velocity.X + (rnd.Next(-10, 10)), ball.velocity.Y + (rnd.Next(-10, 10)));
+                            killshot.Play(1f, 1f, 0f);
+                        }
+                        else
+                            ball.velocity = new Vector2(-ball.velocity.X + (rnd.Next(-2, 2)), ball.velocity.Y + (rnd.Next(-2, 2)));
+                    GamePad.SetVibration(PlayerIndex.One, 1.0f, 1.0f);
+                    walls.Play(1f, 1f, 0f);
+                    }
+                else
+                    GamePad.SetVibration(PlayerIndex.One, 0f, 0f);
             }
-            else
-                GamePad.SetVibration(PlayerIndex.One, 0f, 0f);
 
             // Update the audio engine
             audioEngine.Update();
@@ -237,16 +266,21 @@ namespace ATLS_4519_Lab3
             // In 4.0, this behavior is the default; in XNA 3.1, it is not
             spriteBatch.Begin();
 
-            // Write Scores
-            spriteBatch.DrawString(Font1, "Opponent: " + ball.score[(int)Who.Opponent], new Vector2(5, 10), Color.Green);
-            spriteBatch.DrawString(Font1, "Player: " + ball.score[(int)Who.Player], new Vector2(winX - Font1.MeasureString("Player: " + ball.score[0]).X - 5, 10), Color.Green);
-            spriteBatch.DrawString(Font1, "Vel: ( " + ball.velocity.X + ", " + ball.velocity.Y + " ) Threshold: " + threshold, new Vector2(5, winY - Font1.LineSpacing), Color.Green);
-
-            // Draw physical objects
-            ball.Draw(spriteBatch);
-            opponent.Draw(spriteBatch);
-            player.Draw(spriteBatch);
-    
+            if (!isDone) {
+                // Write Scores
+                spriteBatch.DrawString(Font1, "Opponent: " + ball.score[(int)Who.Opponent], new Vector2(5, 10), Color.Green);
+                spriteBatch.DrawString(Font1, "Player: " + ball.score[(int)Who.Player], new Vector2(winX - Font1.MeasureString("Player: " + ball.score[0]).X - 5, 10), Color.Green);
+                spriteBatch.DrawString(Font1, "Vel: ( " + ball.velocity.X + ", " + ball.velocity.Y + " ) Threshold: " + threshold, new Vector2(5, winY - Font1.LineSpacing), Color.Green);
+            
+                // Draw physical objects
+                ball.Draw(spriteBatch);
+                opponent.Draw(spriteBatch);
+                player.Draw(spriteBatch);
+            }
+            else {
+                FontPos = new Vector2((winX / 2) - 400, (winY / 2) - 50);
+                spriteBatch.DrawString(Font1, victory, FontPos, Color.Green);
+            }
             spriteBatch.End();
 
             base.Draw(gameTime);
