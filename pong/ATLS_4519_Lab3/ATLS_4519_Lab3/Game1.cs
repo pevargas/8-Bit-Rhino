@@ -63,9 +63,9 @@ namespace ATLS_4519_Lab3
         {
             graphics = new GraphicsDeviceManager(this);
             // changing the back buffer size changes the window size (in windowed mode)
-            graphics.PreferredBackBufferWidth = 1400;
-            graphics.PreferredBackBufferHeight = 700;
-            threshold = graphics.PreferredBackBufferHeight / 2;
+            graphics.PreferredBackBufferWidth = 1200;
+            graphics.PreferredBackBufferHeight = 600;
+            threshold = graphics.PreferredBackBufferWidth / 2;
 
             Content.RootDirectory = "Content";
         }
