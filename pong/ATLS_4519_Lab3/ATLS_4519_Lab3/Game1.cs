@@ -190,7 +190,7 @@ namespace ATLS_4519_Lab3
                         ball.velocity = new Vector2(rnd.Next(3, 6), rnd.Next(-5, 6));
                         break;
                     default:
-                        soundEffect1.Play();
+                        soundEffect1.Play(.50f, .75f, 0f);
                         break;
                 }
             }
@@ -216,6 +216,7 @@ namespace ATLS_4519_Lab3
                     else
                         ball.velocity = new Vector2(-ball.velocity.X + (rnd.Next(-2, 2)), ball.velocity.Y + (rnd.Next(-2, 2)));
                 GamePad.SetVibration(PlayerIndex.One, 1.0f, 1.0f);
+                soundEffect1.Play(1f, 1f, 0f);
 
                 //soundEffect2.Play(1.0f, pitch, pan);
                 //soundEffect1.Play();

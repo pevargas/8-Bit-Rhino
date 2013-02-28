@@ -225,14 +225,10 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
-    Xbox Bank Last Modified Low = 0;
-    Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 0;
-    PC Bank Last Modified High = 0;
     Header Last Modified Low = 0;
     Header Last Modified High = 0;
-    Bank Last Revised Low = 1839635154;
-    Bank Last Revised High = 30279024;
+    Bank Last Revised Low = 2098648675;
+    Bank Last Revised High = 30283096;
 
     Wave
     {
@@ -268,8 +264,8 @@ Wave Bank
     Streaming = 1;
     Seek Tables = 1;
     Compression Preset Name = <none>;
-    Bank Last Revised Low = 1386164475;
-    Bank Last Revised High = 30283092;
+    Bank Last Revised Low = 2296099969;
+    Bank Last Revised High = 30283096;
 
     Wave
     {
@@ -297,9 +293,9 @@ Wave Bank
     Wave
     {
         Name = EricJordan_2012_30sec;
-        File = ..\..\..\..\..\..\Desktop\CU Important Files\ATLAS\ATLS 4519 - XBox 360\ATLS_4519_Lab4\SF_ATLS_4519_Lab3\SF_ATLS_4519_Lab3Content\EricJordan_2012_30sec.wav;
-        Build Settings Last Modified Low = 1149430935;
-        Build Settings Last Modified High = 30283092;
+        File = EricJordan_2012_30sec.wav;
+        Build Settings Last Modified Low = 2296099969;
+        Build Settings Last Modified High = 30283096;
 
         Cache
         {
@@ -312,8 +308,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 1261661069;
-            Last Modified High = 30280409;
+            Last Modified Low = 624449270;
+            Last Modified High = 30283093;
         }
     }
 }
