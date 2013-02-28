@@ -121,13 +121,13 @@ namespace ATLS_4519_Lab3
             Font1 = Content.Load<SpriteFont>("Courier New");
 
             // Load a 2D texture sprite
-            ball     = new clsSprite(Content.Load<Texture2D>("small_ball"), 
+            ball     = new clsSprite(Content.Load<Texture2D>("volt-ball-final"), 
                             new Vector2(winX/2, winY/2), new Vector2(ballD, ballD),
                             winX, winY);
-            opponent = new clsSprite(Content.Load<Texture2D>("left_paddle"),
+            opponent = new clsSprite(Content.Load<Texture2D>("vt_left_paddle"),
                             new Vector2(10, winY/2 - padY), new Vector2(padX, padY),
                             winX, winY);
-            player   = new clsSprite(Content.Load<Texture2D>("right_paddle"),
+            player   = new clsSprite(Content.Load<Texture2D>("vt_right_paddle"),
                             new Vector2(winX - (10+padX), winY / 2 - padY), new Vector2(padX, padY),
                             winX, winY);
             // Create a SpriteBatch to render the sprite
@@ -238,16 +238,16 @@ namespace ATLS_4519_Lab3
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             // Draw the sprite using Alpha Blend, which uses transparency information if available 
             // In 4.0, this behavior is the default; in XNA 3.1, it is not
             spriteBatch.Begin();
 
             // Write Scores
-            spriteBatch.DrawString(Font1, "Opponent: " + ball.score[(int)Who.Opponent], new Vector2(5, 10), Color.Yellow);
-            spriteBatch.DrawString(Font1, "Player: " + ball.score[(int)Who.Player], new Vector2(winX - Font1.MeasureString("Player: " + ball.score[0]).X - 5, 10), Color.Yellow);
-            spriteBatch.DrawString(Font1, "Vel: ( " + ball.velocity.X + ", " + ball.velocity.Y + " ) Threshold: " + threshold, new Vector2(5, winY - Font1.LineSpacing), Color.Yellow);
+            spriteBatch.DrawString(Font1, "Opponent: " + ball.score[(int)Who.Opponent], new Vector2(5, 10), Color.Green);
+            spriteBatch.DrawString(Font1, "Player: " + ball.score[(int)Who.Player], new Vector2(winX - Font1.MeasureString("Player: " + ball.score[0]).X - 5, 10), Color.Green);
+            spriteBatch.DrawString(Font1, "Vel: ( " + ball.velocity.X + ", " + ball.velocity.Y + " ) Threshold: " + threshold, new Vector2(5, winY - Font1.LineSpacing), Color.Green);
 
             // Draw physical objects
             ball.Draw(spriteBatch);
