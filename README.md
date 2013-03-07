@@ -3,7 +3,7 @@
 
 A repository for ATLS 4519: Computer Game Devlopment for the XBOX.
 
-Memebers
+Members
 ---------
 Andrew Davis  
 Spencer Fink  
