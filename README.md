@@ -12,6 +12,10 @@ Patrick Vargas
 
 Projects
 --------
-Pong  
+###Pong  
 
 Our game implements a basic pong game where the player is against the opponent. Our emeblishments include an electronica type feel to the game, as well as some goofy sounds.
+
+###Shooter  
+
+This directory contains a 2D shooting game.
