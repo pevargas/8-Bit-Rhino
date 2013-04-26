@@ -66,8 +66,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChillMonkey.png">
-      <Name>ChillMonkey</Name>
+    <Compile Include="finalgameboard.jpg">
+      <Name>finalgameboard</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

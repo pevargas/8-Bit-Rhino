@@ -25,8 +25,8 @@ namespace BananaBombers
     /// </summary>
     class GameplayScreen : GameScreen
     {
-        #region Fields
-
+        #region Variables
+        #region MS Code
         ContentManager content;
 
         Player Player1;
@@ -39,7 +39,11 @@ namespace BananaBombers
         Random random = new Random();
 
         float pauseAlpha;
+        #endregion
 
+        GraphicsDeviceManager graphics;
+        SpriteBatch spriteBatch;
+        Board gameBoard;
         #endregion
 
         #region GameplayScreen Constructor
@@ -48,8 +52,10 @@ namespace BananaBombers
         /// </summary>
         public GameplayScreen()
         {
+            #region MS Code
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
+            #endregion
         }
         #endregion
 
@@ -73,6 +79,13 @@ namespace BananaBombers
             // while, giving you a chance to admire the beautiful loading screen.
             Thread.Sleep(1000);
 
+            gameBoard = new Board(
+                content.Load<Texture2D>("finalgameboard"),
+                new Vector2(0f, 0f),
+                new Vector2(500f, 500f)
+            );
+
+
             // once the load has finished, we use ResetElapsedTime to tell the game's
             // timing mechanism that we have just finished a very long frame, and that
             // it should not try to catch up.
@@ -80,17 +93,17 @@ namespace BananaBombers
         }
         #endregion
 
-        #region Load Content
-        /// <summary> 
-        
-        
+        #region Unload Content
+        /// <summary>
         /// Unload graphics content used by the game.
         /// </summary>
         public override void UnloadContent()
         {
-            Player1.texture.Dispose();
-            spriteBatch.Dispose();
+            #region MS Code
             content.Unload();
+            #endregion
+            gameBoard.texture.Dispose();
+            spriteBatch.Dispose();
         }
         #endregion
 
@@ -195,16 +208,19 @@ namespace BananaBombers
         public override void Draw(GameTime gameTime)
         {
             // This game has a blue background. Why? Because!
-            ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
-                                               Color.CornflowerBlue, 0, 0);
+            ScreenManager.GraphicsDevice.Clear(ClearOptions.Target, Color.Gray, 0, 0);
 
             // Our player and enemy are both actually just text strings.
-            SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
+            spriteBatch = ScreenManager.SpriteBatch;
 
             spriteBatch.Begin();
 
-            Player1.Draw(spriteBatch);
-            
+            gameBoard.Draw(spriteBatch);
+
+            spriteBatch.DrawString(gameFont, "// TODO", playerPosition, Color.Green);
+
+            Player.Draw("ChillMonkey", enemyPosition, Color.White);
+
             spriteBatch.End();
 
             // If the game is transitioning on or off, fade it out to black.
