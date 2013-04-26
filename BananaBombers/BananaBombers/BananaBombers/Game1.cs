@@ -45,14 +45,15 @@ namespace BananaBombers
             graphics.PreferredBackBufferWidth = 853;
             graphics.PreferredBackBufferHeight = 480;
 
+            #region MS Code
             // Create the screen manager component.
             screenManager = new ScreenManager(this);
-
             Components.Add(screenManager);
 
             // Activate the first screens.
             screenManager.AddScreen(new BackgroundScreen(), null);
             screenManager.AddScreen(new MainMenuScreen(), null);
+            #endregion
         }
         #endregion
 
@@ -108,10 +109,6 @@ namespace BananaBombers
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
-
             // TODO: Add your update logic here
 
             base.Update(gameTime);
