@@ -39,9 +39,7 @@ namespace BananaBombers
 
         #endregion
 
-        #region Initialization
-
-
+        #region GameplayScreen Constructor
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -50,8 +48,9 @@ namespace BananaBombers
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
         }
+        #endregion
 
-
+        #region Load Content
         /// <summary>
         /// Load graphics content for the game.
         /// </summary>
@@ -72,8 +71,9 @@ namespace BananaBombers
             // it should not try to catch up.
             ScreenManager.Game.ResetElapsedTime();
         }
+        #endregion
 
-
+        #region Load Content
         /// <summary>
         /// Unload graphics content used by the game.
         /// </summary>
@@ -81,20 +81,15 @@ namespace BananaBombers
         {
             content.Unload();
         }
-
-
         #endregion
 
-        #region Update and Draw
-
-
+        #region Update
         /// <summary>
         /// Updates the state of the game. This method checks the GameScreen.IsActive
         /// property, so the game will stop updating when the pause menu is active,
         /// or if you tab away to a different application.
         /// </summary>
-        public override void Update(GameTime gameTime, bool otherScreenHasFocus,
-                                                       bool coveredByOtherScreen)
+        public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
             base.Update(gameTime, otherScreenHasFocus, false);
 
@@ -123,8 +118,9 @@ namespace BananaBombers
                 // it by inserting something more interesting in this space :-)
             }
         }
+        #endregion
 
-
+        #region Input Handling
         /// <summary>
         /// Lets the game respond to player input. Unlike the Update method,
         /// this will only be called when the gameplay screen is active.
@@ -179,8 +175,9 @@ namespace BananaBombers
                 playerPosition += movement * 2;
             }
         }
+        #endregion
 
-
+        #region Draw
         /// <summary>
         /// Draws the gameplay screen.
         /// </summary>
@@ -209,8 +206,7 @@ namespace BananaBombers
                 ScreenManager.FadeBackBufferToBlack(alpha);
             }
         }
-
-
         #endregion
+
     }
 }
