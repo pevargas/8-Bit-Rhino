@@ -87,6 +87,7 @@
     <Compile Include="Screens\MessageBoxScreen.cs" />
     <Compile Include="Screens\OptionsMenuScreen.cs" />
     <Compile Include="Screens\PauseMenuScreen.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="Screens\PlayerIndexEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>

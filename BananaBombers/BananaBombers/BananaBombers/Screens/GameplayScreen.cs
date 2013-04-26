@@ -28,6 +28,9 @@ namespace BananaBombers
         #region Fields
 
         ContentManager content;
+
+        Player Player1;
+        SpriteBatch spriteBatch;
         SpriteFont gameFont;
 
         Vector2 playerPosition = new Vector2(100, 100);
@@ -61,6 +64,10 @@ namespace BananaBombers
 
             gameFont = content.Load<SpriteFont>("gamefont");
 
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            Player1 = new Player(Content.Load<Texture2D>("ChillMonkey"), new Vector2(0f, 0f), new Vector2(64f, 64f));
+
             // A real game would probably have more content than this sample, so
             // it would take longer to load. We simulate that by delaying for a
             // while, giving you a chance to admire the beautiful loading screen.
@@ -74,11 +81,15 @@ namespace BananaBombers
         #endregion
 
         #region Load Content
-        /// <summary>
+        /// <summary> 
+        
+        
         /// Unload graphics content used by the game.
         /// </summary>
         public override void UnloadContent()
         {
+            Player1.texture.Dispose();
+            spriteBatch.Dispose();
             content.Unload();
         }
         #endregion
@@ -192,10 +203,8 @@ namespace BananaBombers
 
             spriteBatch.Begin();
 
-            Player.Draw("ChillMonkey", playerPosition, Color.White);
-
-            Player.Draw("ChillMonkey", enemyPosition, Color.White);
-
+            Player1.Draw(spriteBatch);
+            
             spriteBatch.End();
 
             // If the game is transitioning on or off, fade it out to black.
