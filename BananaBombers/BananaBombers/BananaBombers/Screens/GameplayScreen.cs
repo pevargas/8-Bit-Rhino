@@ -195,10 +195,9 @@ namespace BananaBombers
 
             spriteBatch.Begin();
 
-            spriteBatch.DrawString(gameFont, "// TODO", playerPosition, Color.Green);
+            Player.Draw("ChillMonkey", playerPosition, Color.White);
 
-            spriteBatch.DrawString(gameFont, "Insert Gameplay Here",
-                                   enemyPosition, Color.DarkRed);
+            Player.Draw("ChillMonkey", enemyPosition, Color.White);
 
             spriteBatch.End();
 
